@@ -15,6 +15,8 @@ export type ISignupPayload = {
 };
 export type ISignupResponse = {
     id?: number;
-    token?: string;
     error?: string;
+    email?: string;
+    password?: string;
+    name?: string;
 };

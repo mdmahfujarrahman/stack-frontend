@@ -1,26 +1,17 @@
 import API from "./common";
-import {
-    ILoginPayload,
-    ILoginResponse,
-    ISignupPayload,
-    ISignupResponse,
-} from "./servicesType";
+import { ILoginPayload, ISignupPayload } from "./servicesType";
 
-const getLogin = async (payload: ILoginPayload): Promise<ILoginResponse> => {
+const getLogin = async (payload: ILoginPayload) => {
     return await API.post("/login", payload);
 };
 
-const getSignup = async (payload: ISignupPayload): Promise<ISignupResponse> => {
+const getSignup = async (payload: ISignupPayload) => {
     return await API.post("/signup", payload);
 };
 
-export const StackServices: IStackServices = {
+export const StackServices = {
     getLogin,
     getSignup,
 };
 
 // interface IStackServices
-interface IStackServices {
-    getLogin: (payload: ILoginPayload) => Promise<ILoginResponse>;
-    getSignup: (payload: ISignupPayload) => Promise<ISignupResponse>;
-}

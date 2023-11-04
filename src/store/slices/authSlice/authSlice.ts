@@ -50,10 +50,10 @@ export const authSlice = createSlice({
             };
             state.isLoading = false;
         });
-        builder.addCase(loginStackThunk.rejected, (state, action) => {
+        builder.addCase(loginStackThunk.rejected, (state) => {
             state.error = {
                 isError: true,
-                msg: action?.payload?.response?.data?.error,
+                msg: "User  not found",
             };
             state.isLoading = false;
         });
@@ -81,7 +81,7 @@ export const authSlice = createSlice({
             console.log(action);
             state.error = {
                 isError: true,
-                msg: action?.payload?.response?.data?.message,
+                msg: "Something went wrong",
             };
             state.isLoading = false;
         });

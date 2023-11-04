@@ -10,6 +10,7 @@ import { signupStackThunk } from "../../store/actions/authAction/authAction";
 import { useDispatch, useSelector } from "react-redux";
 import { clearAuthError } from "../../store/slices/authSlice/authSlice";
 import toast from "react-hot-toast";
+import { AppDispatch, RootState } from "../../store/store";
 
 interface IinputData {
     email: string;
@@ -25,8 +26,8 @@ export interface Ierror {
 }
 
 const Signup: FC = () => {
-    const { auth } = useSelector((state) => state);
-    const dispatch = useDispatch();
+    const { auth } = useSelector((state: RootState) => state);
+    const dispatch = useDispatch<AppDispatch>();
     const [inputData, setInputData] = useState<IinputData>({
         email: "",
         name: "",

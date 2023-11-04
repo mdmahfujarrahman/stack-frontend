@@ -21,7 +21,6 @@ export const signupStackThunk = createAsyncThunk(
     async (payload: ISignupPayload, thunkAPI) => {
         const res = await StackServices.getSignup(payload)
             .then((res) => {
-                console.log(res);
                 return thunkAPI.fulfillWithValue(res.data);
             })
             .catch((error) => {
