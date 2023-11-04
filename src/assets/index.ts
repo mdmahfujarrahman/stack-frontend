@@ -11,7 +11,7 @@ import search from "./search.svg";
 import notification from "./notification.svg";
 import profile from "./profile.png";
 import first from "./First.svg";
-import last from "./last.svg";
+import last from "./Last.svg";
 import eye from "./eye.svg";
 
 export const StackImages: IStackImages = {
