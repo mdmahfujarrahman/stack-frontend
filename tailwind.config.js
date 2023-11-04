@@ -9,7 +9,10 @@ export default {
                 secondary: "#B0B7C3",
                 ternary: "#F0F5FA",
                 success: "#38CB89",
+                textColor: "#8A94A6",
                 btnbackground: "#377DFF",
+                danger: "#FF5630",
+                checkboxbg: "#EDEFF1"
             },
         },
     },

@@ -5,9 +5,13 @@
 
 :root {
   --primary: #4E5D78;
-  --secondary: #f47e20;
-  --ternary: #00ba34;
-  --purple: #e2dfff;
+  --secondary: #B0B7C3;
+  --ternary: #F0F5FA;
+  --success: #38CB89;
+  --textColor: #8A94A6;
+  --btnbackground: #377DFF;
+  --danger: #FF5630;
+  --checkboxbg: #EDEFF1
 }
 * {
   margin: 0;
@@ -64,6 +68,49 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   appearance: textfield;
 }
+input[type="checkbox"] {
+  visibility: hidden;
+}
+
+.custom-checkbox label {
+  background-color: var(--checkboxbg);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  height: 26px;
+  left: 0px;
+  position: absolute;
+  top: -6px;
+  width: 26px;
+}
+
+.custom-checkbox label:after {
+  border: 2px solid #fff;
+  border-top: none;
+  border-right: none;
+  content: "";
+  height: 6px;
+  left: 7px;
+  opacity: 0;
+  position: absolute;
+  top: 9px;
+  transform: rotate(-45deg);
+  width: 15px;
+}
+
+.custom-checkbox input[type="checkbox"] {
+  visibility: hidden;
+}
+
+.custom-checkbox input[type="checkbox"]:checked + label {
+  background-color: var(--success);
+  border-color: var(--success);
+}
+
+.custom-checkbox input[type="checkbox"]:checked + label:after {
+  opacity: 1;
+}
+
 input[type=textarea] {
   resize: none;
 }
