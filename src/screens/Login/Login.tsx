@@ -1,10 +1,15 @@
-import { useState, FC } from "react";
+import { useState, FC, useEffect } from "react";
 import CustomCheckbox from "../../ui/CustomCheckbox/CustomCheckbox";
 import CustomButton from "../../ui/CustomButton/CustomButton";
 import CustomInput from "../../ui/CustomInput/CustomInput";
 import { StackImages } from "../../assets";
 import AuthHeader from "../../components/AuthHeader/AuthHeader";
 import { useNavigate } from "react-router-dom";
+import { validatedInput } from "../../helper/validatedInput";
+import { loginStackThunk } from "../../store/actions/authAction/authAction";
+import { useDispatch, useSelector } from "react-redux";
+import toast from "react-hot-toast";
+import { clearAuthError } from "../../store/slices/authSlice/authSlice";
 
 interface IinputData {
     email: string;
@@ -12,13 +17,14 @@ interface IinputData {
     remember: boolean;
     error: Ierror[];
 }
-
 export interface Ierror {
     isError: boolean;
     name: string;
 }
 
 const Login: FC = () => {
+    const { auth } = useSelector((state) => state);
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const [inputData, setInputData] = useState<IinputData>({
         email: "",
@@ -64,27 +70,37 @@ const Login: FC = () => {
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const { email, password, remember } = inputData;
-        if (email.length === 0 || password.length === 0 || !remember) {
+        const isValided: Ierror[] = [];
+        const validate = validatedInput(inputData, isValided, "login");
+        console.log(validate);
+        if (validate === true) {
+            dispatch(
+                loginStackThunk({
+                    email: inputData.email,
+                    password: inputData.password,
+                })
+            );
+        } else {
             setInputData((prevInputData) => ({
                 ...prevInputData,
-                error: [
-                    {
-                        isError: true,
-                        name: "email",
-                    },
-                    {
-                        isError: true,
-                        name: "password",
-                    },
-                    {
-                        isError: true,
-                        name: "remember",
-                    },
-                ],
+                error: isValided,
             }));
         }
     };
+
+    useEffect(() => {
+        if (auth.token) {
+            navigate("/dashboard");
+        }
+        if (auth.error.msg) {
+            toast.error(auth.error.msg);
+
+            setTimeout(() => {
+                dispatch(clearAuthError);
+            }, 1000);
+        }
+    }, [auth.token, auth.error]);
+
     return (
         <div className="flex flex-col justify-center   py-4">
             <AuthHeader
@@ -113,7 +129,7 @@ const Login: FC = () => {
                     handleBlur={handleBlur}
                     placeholder="Password"
                     error={
-                        inputData.error.find((item) => item.name === "Password")
+                        inputData.error.find((item) => item.name === "password")
                             ?.isError
                             ? "Please enter your password"
                             : ""
@@ -130,8 +146,12 @@ const Login: FC = () => {
                     label="Remember Me"
                     handleChange={handleChange}
                 />
-                <CustomButton btnClass="bg-btnbackground py-5 my-4 text-xl text-white">
-                    Sign In
+                <CustomButton btnClass="bg-btnbackground py-5 my-4 text-xl text-white flex items-center justify-center">
+                    {auth.isLoading ? (
+                        <div className="animate-spin rounded-full h-7 w-7 border-b-2 border-white" />
+                    ) : (
+                        "Login"
+                    )}
                 </CustomButton>
                 <div className="my-4 flex items-center justify-center text-xl">
                     <p>Don’t have an account yet?&nbsp;</p>

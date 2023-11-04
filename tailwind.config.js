@@ -12,7 +12,8 @@ export default {
                 textColor: "#8A94A6",
                 btnbackground: "#377DFF",
                 danger: "#FF5630",
-                checkboxbg: "#EDEFF1"
+                checkboxbg: "#EDEFF1",
+                sidebarText: "#A7AFBC"
             },
         },
     },

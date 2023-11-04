@@ -5,6 +5,7 @@ import Dashboard from "../screens/Dashboard/Dashboard";
 import User from "../screens/User/User";
 import Login from "../screens/Login/Login";
 import Signup from "../screens/Signup/Signup";
+import Sales from "../screens/Sales/Sales";
 
 const RouterComponent: React.FC = () => {
     return (
@@ -13,6 +14,7 @@ const RouterComponent: React.FC = () => {
                 <Route element={<ProtectedRouter />}>
                     <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/user" element={<User />} />
+                    <Route path="/sales" element={<Sales />} />
                 </Route>
                 <Route element={<UnProtectedRouter />}>
                     <Route path="/" element={<Login />} />

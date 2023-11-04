@@ -11,7 +11,7 @@ export type ILoginResponse = {
 export type ISignupPayload = {
     email: string;
     password: string;
-    name: string;
+    name?: string;
 };
 export type ISignupResponse = {
     id?: number;

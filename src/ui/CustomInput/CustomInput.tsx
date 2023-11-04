@@ -1,4 +1,5 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
+import { StackImages } from "../../assets";
 
 interface ICustomInputProps {
     placeholder: string;
@@ -23,11 +24,16 @@ const CustomInput: FC<ICustomInputProps> = ({
     handleBlur,
     handleChange,
 }) => {
-    console.log(value);
+    const [showPassword, setShowPassword] = useState(false);
+
+    const handleShowPassword = () => {
+        setShowPassword(!showPassword);
+    };
+
     return (
         <div className="flex flex-col mb-6 w-full relative">
             <div
-                className={`flex border w-full  px-5 py-5 rounded-[16px] ${
+                className={`flex border w-full relative px-5 py-5 rounded-[16px] ${
                     error ? "border-danger" : ""
                 }`}
             >
@@ -43,6 +49,18 @@ const CustomInput: FC<ICustomInputProps> = ({
                     name={name}
                     onBlur={handleBlur}
                 />
+                <div
+                    onClick={handleShowPassword}
+                    className="absolute right-0 top-0"
+                >
+                    {type === "password" && (
+                        <img
+                            className="mt-5 mr-5 cursor-pointer"
+                            src={StackImages.eye}
+                            alt="eye"
+                        />
+                    )}
+                </div>
             </div>
             {error && <p className="my-3 text-danger">{error}</p>}
             {type === "password" && value && value?.length > 0 && (

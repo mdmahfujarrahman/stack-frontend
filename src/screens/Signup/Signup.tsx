@@ -1,10 +1,15 @@
-import { FC, useState } from "react";
+import { FC, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthHeader from "../../components/AuthHeader/AuthHeader";
 import CustomInput from "../../ui/CustomInput/CustomInput";
 import { StackImages } from "../../assets";
 import CustomCheckbox from "../../ui/CustomCheckbox/CustomCheckbox";
 import CustomButton from "../../ui/CustomButton/CustomButton";
+import { validatedInput } from "../../helper/validatedInput";
+import { signupStackThunk } from "../../store/actions/authAction/authAction";
+import { useDispatch, useSelector } from "react-redux";
+import { clearAuthError } from "../../store/slices/authSlice/authSlice";
+import toast from "react-hot-toast";
 
 interface IinputData {
     email: string;
@@ -20,6 +25,8 @@ export interface Ierror {
 }
 
 const Signup: FC = () => {
+    const { auth } = useSelector((state) => state);
+    const dispatch = useDispatch();
     const [inputData, setInputData] = useState<IinputData>({
         email: "",
         name: "",
@@ -67,36 +74,36 @@ const Signup: FC = () => {
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const { email, name, password, terms } = inputData;
-        if (
-            email.length === 0 ||
-            name.length === 0 ||
-            password.length === 0 ||
-            !terms
-        ) {
+        const isValided: Ierror[] = [];
+        const validate = validatedInput(inputData, isValided, "signup");
+        console.log(validate);
+        if (validate === true) {
+            dispatch(
+                signupStackThunk({
+                    email: inputData.email,
+                    password: inputData.password,
+                })
+            );
+        } else {
             setInputData((prevInputData) => ({
                 ...prevInputData,
-                error: [
-                    {
-                        isError: true,
-                        name: "email",
-                    },
-                    {
-                        isError: true,
-                        name: "name",
-                    },
-                    {
-                        isError: true,
-                        name: "password",
-                    },
-                    {
-                        isError: true,
-                        name: "terms",
-                    },
-                ],
+                error: isValided,
             }));
         }
     };
+
+    useEffect(() => {
+        if (auth.token) {
+            navigate("/dashboard");
+        }
+        if (auth.error.msg) {
+            toast.error(auth.error.msg);
+
+            setTimeout(() => {
+                dispatch(clearAuthError);
+            }, 1000);
+        }
+    }, [auth.token, auth.error]);
 
     return (
         <div className="flex flex-col justify-center  py-4">
@@ -158,8 +165,12 @@ const Signup: FC = () => {
                     handleChange={handleChange}
                     checked={inputData.terms}
                 />
-                <CustomButton btnClass="bg-btnbackground py-5 my-5 text-xl text-white">
-                    Sign Up
+                <CustomButton btnClass="bg-btnbackground py-5 my-5 flex items-center justify-center text-xl text-white">
+                    {auth.isLoading ? (
+                        <div className="animate-spin rounded-full h-7 w-7 border-b-2 border-white" />
+                    ) : (
+                        "Sign Up"
+                    )}
                 </CustomButton>
                 <div className="my-4 flex items-center justify-center text-xl">
                     <p>Already have an account?&nbsp;</p>

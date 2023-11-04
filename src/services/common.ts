@@ -1,5 +1,6 @@
 import axios, { AxiosInstance, InternalAxiosRequestConfig } from "axios";
 
+
 const API: AxiosInstance = axios.create({
     baseURL: "https://reqres.in/api",
 });
