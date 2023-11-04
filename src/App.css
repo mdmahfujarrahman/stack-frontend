@@ -1,0 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;400;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary: #4E5D78;
+  --secondary: #f47e20;
+  --ternary: #00ba34;
+  --purple: #e2dfff;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 10px;
+}
+ol, ul {
+  list-style: none;
+}
+a {
+  text-decoration: none;
+}
+blockquote, q {
+  quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+h1, h2, h3, h4, h5, h6, p, span, div, input {
+  font-family: 'Inter', sans-serif;
+}
+
+::-webkit-scrollbar {
+  width: 7px;
+  padding: 3px;
+  border-radius: 10px;
+  height: 100px;
+  scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar-thumb {
+  width: 2px;
+  padding: 5px;
+  background-color: #1C1B4D;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+input[type=number] {
+  appearance: textfield;
+}
+input[type=textarea] {
+  resize: none;
+}
+
+/* Custom Menu */
+.custom_menu-btn {
+  @apply gap-4 w-full rounded-md  p-4 text-base outline-none capitalize;
+}
+
+.custom_menu-items {
+  @apply flex-col absolute left-0 mt-2  w-fit max-h-64 origin-top-right rounded-xl bg-white border   overflow-y-auto;
+}
+
+.custom_menu-item {
+  @apply text-left w-full px-5 py-2 text-sm  self-start whitespace-nowrap capitalize;
+}
